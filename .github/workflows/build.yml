@@ -45,14 +45,7 @@ jobs:
         GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         RELEASE_TAG: ${{ github.ref_name == 'master' && 'continuous' || format('continuous-{0}', github.ref_name) }}
       run: |
-        gh release delete "$RELEASE_TAG" \
-          --yes \
-          --cleanup-tag \
-          --repo "$GITHUB_REPOSITORY" || true
         gh run download "$GITHUB_RUN_ID" \
           --dir artifacts/ \
           --repo "$GITHUB_REPOSITORY"
-        gh release create "$RELEASE_TAG" artifacts/* \
-          --title "Donut ${{ github.ref_name }} Build" \
-          --target $GITHUB_SHA \
-          --repo "$GITHUB_REPOSITORY" \
+        gh release upload "$GITHUB_REF_NAME" artifacts/

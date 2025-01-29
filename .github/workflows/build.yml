@@ -40,10 +40,11 @@ jobs:
     runs-on: ubuntu-latest
     needs: [build]
     steps:
-    - name: Remove old release, fetch artifacts, repackage binaries and upload new release
+    - name: Checkout repo
+      uses: actions/checkout@v4
+    - name: Upload Release
       env:
         GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        RELEASE_TAG: ${{ github.ref_name == 'master' && 'continuous' || format('continuous-{0}', github.ref_name) }}
       run: |
         gh run download "$GITHUB_RUN_ID" \
           --dir artifacts/ \

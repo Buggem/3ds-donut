@@ -23,8 +23,7 @@ int main(int argc, char** argv)
 	cfguInit();
 
 
-	u8 language = 0;
-	Result res;
+
 
 	// Init console for text output
 	consoleInit(GFX_BOTTOM, NULL);
@@ -39,7 +38,7 @@ int main(int argc, char** argv)
 		u32 kDown = hidKeysDown();
 		if (kDown & KEY_START)
 			break; // break in order to return to hbmenu
-		
+
 		memset(b, 32, 1760);	// text buffer
 		memset(z, 127, 1760);	 // z buffer
 		int sj=0, cj=1024;

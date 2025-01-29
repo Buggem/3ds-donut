@@ -26,7 +26,7 @@ int main(int argc, char** argv)
 
 
 	// Init console for text output
-	consoleInit(GFX_BOTTOM, NULL);
+	consoleInit(GFX_TOP, NULL);
 
 
 

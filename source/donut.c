@@ -50,8 +50,13 @@ char (*render_frame(float A, float B))[SCREEN_WIDTH] {
 	  // our math above
 	  float x = circlex*(cosB*cosphi + sinA*sinB*sinphi)
 		- circley*cosA*sinB;
-	  float y = (circlex*(sinB*cosphi - sinA*cosB*sinphi)
-		+ circley*cosA*cosB)/2;
+#if __3DS__
+	  float y = circlex*(sinB*cosphi - sinA*cosB*sinphi)
+		+ circley*cosA*cosB;
+#else
+          float y = (circlex*(sinB*cosphi - sinA*cosB*sinphi)
+                + circley*cosA*cosB)/2;
+#endif
 	  float z = K2 + cosA*circlex*sinphi + circley*sinA;
 	  float ooz = 1/z;  // "one over z"
 

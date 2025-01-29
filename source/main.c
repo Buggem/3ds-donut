@@ -53,7 +53,7 @@ int main(int argc, char** argv)
 		gfxSwapBuffers();
 		gspWaitForVBlank();
 
-		usleep(15000);
+		usleep(DELAY);
 	}
 
 	// Exit services

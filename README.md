@@ -1,4 +1,6 @@
-get_system_language
+3ds-donut
 =======
 
-This is an example on how to get the system language on the 3DS.
+Lower than previously known possible effort port of the donut spinning thing to the 3DS.
+
+Press START to quit the program.

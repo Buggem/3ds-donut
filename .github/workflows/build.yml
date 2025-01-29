@@ -49,4 +49,5 @@ jobs:
         gh run download "$GITHUB_RUN_ID" \
           --dir artifacts/ \
           --repo "$GITHUB_REPOSITORY"
-        gh release upload "$GITHUB_REF_NAME" artifacts/
+        zip -r release.zip artifacts/
+        gh release upload "$GITHUB_REF_NAME" release.zip

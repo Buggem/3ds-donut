@@ -41,6 +41,8 @@ jobs:
     name: "Upload releases"
     runs-on: ubuntu-latest
     needs: [build]
+    env:
+      GH_TOKEN: ${{ github.token }}
     steps:
     - name: Checkout repo
       uses: actions/checkout@v4
@@ -52,7 +54,6 @@ jobs:
     - name: Upload Nightly
       if: github.event_name == 'schedule'
       run: |
-        export GH_TOKEN="${{ secrets.GITHUB_TOKEN }}"
         zip -r "nightly.zip" artifacts/release/
         gh release delete-asset latest nightly.zip -y
         gh release delete-asset latest 3ds-donut.3dsx -y
@@ -61,9 +62,6 @@ jobs:
     - name: Upload Release
       if: github.event_name != 'schedule'
       run: |
-        export GH_TOKEN="${{ secrets.GITHUB_TOKEN }}"
         zip -r "release-${GITHUB_REF_NAME}.zip" artifacts/release/
         gh release upload "$GITHUB_REF_NAME" "release-${GITHUB_REF_NAME}.zip"
         gh release upload "$GITHUB_REF_NAME" artifacts/release/3ds-donut.3dsx
-      env:
-        GH_TOKEN: ${{ github.token }}

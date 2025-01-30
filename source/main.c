@@ -36,17 +36,25 @@ int main(int argc, char** argv)
 		if (kDown & KEY_START)
 			break; // break in order to return to hbmenu
 
-	memcpy(output, render_frame(A, B), sizeof(output));
-	for (int j = 0; j < SCREEN_HEIGHT; j++) {
-	  for (int i = 0; i < SCREEN_WIDTH; i++) {
-		putchar(output[i][j]);
-		A += 0.00004;
-		B += 0.00002;
-	  }
-	  putchar('\n');
-	}
-	usleep(DELAY);
-	printf("\x1b[23A");
+		memcpy(output, render_frame(A, B), sizeof(output));
+		for (int j = 0; j < SCREEN_HEIGHT; j++) {
+			for (int i = 0; i < SCREEN_WIDTH; i++) {
+				putchar(output[i][j]);
+				if (kDown & KEY_R) {
+					A += SPEED_A;
+					B += SPEED_B;
+				}
+				if (kDown & KEY_L) {
+					A -= SPEED_A * 2;
+					B -= SPEED_B * 2;
+				}
+				A += SPEED_A;
+				B += SPEED_B;
+			}
+			putchar('\n');
+		}
+		usleep(DELAY);
+		printf("\x1b[23A");
 
 		// Flush and swap framebuffers
 		gfxFlushBuffers();

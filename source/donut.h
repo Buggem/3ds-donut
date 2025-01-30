@@ -14,4 +14,7 @@
 
 #endif
 
+#define SPEED_A 0.00004
+#define SPEED_B 0.00002
+
 char (*render_frame(float,  float))[SCREEN_WIDTH];

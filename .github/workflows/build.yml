@@ -51,3 +51,4 @@ jobs:
           --repo "$GITHUB_REPOSITORY"
         zip -r "release-${GITHUB_REF_NAME}.zip" artifacts/release/
         gh release upload "$GITHUB_REF_NAME" "release-${GITHUB_REF_NAME}.zip"
+        gh release upload "$GITHUB_REF_NAME" artifacts/release/3ds-donut.3dsx

@@ -1,6 +1,8 @@
 name: Build
 
 on:
+  schedule:
+    - cron: '0 0 * * *' 
   release:
     types: [published]
   workflow_dispatch:
@@ -42,13 +44,26 @@ jobs:
     steps:
     - name: Checkout repo
       uses: actions/checkout@v4
-    - name: Upload Release
-      env:
-        GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      run: |
+    - name: Download Artifacts
+      run: | 
         gh run download "$GITHUB_RUN_ID" \
           --dir artifacts/ \
           --repo "$GITHUB_REPOSITORY"
+    - name: Upload Nightly
+      if: github.event_name == 'schedule'
+      env:
+        GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      run: |
+        zip -r "nightly.zip" artifacts/release/
+        gh release delete-asset latest nightly.zip -y
+        gh release delete-asset latest 3ds-donut.3dsx -y
+        gh release upload latest nightly.zip
+        gh release upload latest artifacts/release/3ds-donut.3dsx
+    - name: Upload Release
+      if: github.event_name != 'schedule'
+      env:
+        GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      run: |
         zip -r "release-${GITHUB_REF_NAME}.zip" artifacts/release/
         gh release upload "$GITHUB_REF_NAME" "release-${GITHUB_REF_NAME}.zip"
         gh release upload "$GITHUB_REF_NAME" artifacts/release/3ds-donut.3dsx

@@ -6,7 +6,7 @@
 
 #if __3DS__
 
-#define DELAY 6000
+#define DELAY 1000
 
 #else
 

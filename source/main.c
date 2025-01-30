@@ -33,6 +33,8 @@ int main(int argc, char** argv)
 		hidScanInput();
 
 		u32 kDown = hidKeysDown();
+		u32 kHeld = hidKeysHeld();
+
 		if (kDown & KEY_START)
 			break; // break in order to return to hbmenu
 
@@ -40,11 +42,11 @@ int main(int argc, char** argv)
 		for (int j = 0; j < SCREEN_HEIGHT; j++) {
 			for (int i = 0; i < SCREEN_WIDTH; i++) {
 				putchar(output[i][j]);
-				if (kDown & KEY_R) {
+				if (kHeld & KEY_R) {
 					A += SPEED_A;
 					B += SPEED_B;
 				}
-				if (kDown & KEY_L) {
+				if (kHeld & KEY_L) {
 					A -= SPEED_A * 2;
 					B -= SPEED_B * 2;
 				}

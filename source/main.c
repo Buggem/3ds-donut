@@ -7,12 +7,16 @@
 
 #include "donut.h"
 
+static int asciiWidth  = (int) GSP_SCREEN_HEIGHT_TOP/8; // why the fuck are these reversed :P
+static int asciiHeight = (int) GSP_SCREEN_WIDTH/8;
+
 
 int main(int argc, char** argv)
 {
 	// Donut variables
 	float A = 0, B = 0;
-	static char output[SCREEN_WIDTH][SCREEN_HEIGHT];
+	static char output[DONUT_WIDTH][DONUT_HEIGHT];
+	int asciiDonutCenterX = (asciiWidth / 2) - (DONUT_HEIGHT / 2);
 
 	// Initialize services
 	gfxInitDefault();
@@ -41,8 +45,9 @@ int main(int argc, char** argv)
 		memcpy(output, render_frame(A, B), sizeof(output));
 
 		consoleClear();
-		for (int j = 0; j < SCREEN_HEIGHT; j++) {
-			for (int i = 0; i < SCREEN_WIDTH; i++) {
+		for (int j = 0; j < DONUT_HEIGHT; j++) {
+			printf("\033[%dC", asciiDonutCenterX);
+			for (int i = 0; i < DONUT_WIDTH; i++) {
 				putchar(output[i][j]);
 				if (kHeld & KEY_R) {
 					A += SPEED_A * FF_MULTI;

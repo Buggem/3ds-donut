@@ -16,17 +16,17 @@ const float K2 = 5;
 // roughly at the edge of the torus, which is at x=R1+R2, z=0.  we
 // want that to be displaced 3/8ths of the width of the screen, which
 // is 3/4th of the way from the center to the side of the screen.
-// SCREEN_WIDTH*3/8 = K1*(R1+R2)/(K2+0)
-// SCREEN_WIDTH*K2*3/(8*(R1+R2)) = K1
-const float K1 = SCREEN_WIDTH*K2*3/(8*(R1+R2));
+// DONUT_WIDTH*3/8 = K1*(R1+R2)/(K2+0)
+// DONUT_WIDTH*K2*3/(8*(R1+R2)) = K1
+const float K1 = DONUT_WIDTH*K2*3/(8*(R1+R2));
 
-char (*render_frame(float A, float B))[SCREEN_WIDTH] {
+char (*render_frame(float A, float B))[DONUT_WIDTH] {
   // precompute sines and cosines of A and B
   float cosA = cos(A), sinA = sin(A);
   float cosB = cos(B), sinB = sin(B);
 
-  static char output[SCREEN_WIDTH][SCREEN_HEIGHT];
-  float zbuffer[SCREEN_WIDTH][SCREEN_HEIGHT];
+  static char output[DONUT_WIDTH][DONUT_HEIGHT];
+  float zbuffer[DONUT_WIDTH][DONUT_HEIGHT];
 
   memset(output, 32, sizeof(output));
   memset(zbuffer, 0, sizeof(zbuffer));
@@ -62,8 +62,8 @@ char (*render_frame(float A, float B))[SCREEN_WIDTH] {
 
 	  // x and y projection.  note that y is negated here, because y
 	  // goes up in 3D space but down on 2D displays.
-	  int xp = (int) (SCREEN_WIDTH/2 + K1*ooz*x);
-	  int yp = (int) (SCREEN_HEIGHT/2 - K1*ooz*y);
+	  int xp = (int) (DONUT_WIDTH/2 + K1*ooz*x);
+	  int yp = (int) (DONUT_HEIGHT/2 - K1*ooz*y);
 
 	  // calculate luminance.  ugly, but correct.
 	  float L = cosphi*costheta*sinB - cosA*costheta*sinphi -

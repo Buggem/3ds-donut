@@ -1,7 +1,7 @@
 #include <stdint.h>
 
-#define SCREEN_WIDTH 30
-#define SCREEN_HEIGHT 30
+#define DONUT_WIDTH 30
+#define DONUT_HEIGHT 30
 
 
 #if __3DS__
@@ -19,4 +19,4 @@
 
 #define FF_MULTI 4
 
-char (*render_frame(float,  float))[SCREEN_WIDTH];
+char (*render_frame(float,  float))[DONUT_WIDTH];

@@ -21,4 +21,6 @@
 
 #define FF_MULTI 4
 
+#define MUSIC_PATH "romfs:/music.mod"
+
 char (*render_frame(float,  float))[DONUT_WIDTH];

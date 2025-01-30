@@ -45,12 +45,12 @@ int main(int argc, char** argv)
 			for (int i = 0; i < SCREEN_WIDTH; i++) {
 				putchar(output[i][j]);
 				if (kHeld & KEY_R) {
-					A += SPEED_A;
-					B += SPEED_B;
+					A += SPEED_A * FF_MULTI;
+					B += SPEED_B * FF_MULTI;
 				}
 				if (kHeld & KEY_L) {
-					A -= SPEED_A * 2;
-					B -= SPEED_B * 2;
+					A -= SPEED_A * (1 + FF_MULTI);
+					B -= SPEED_B * (1 + FF_MULTI);
 				}
 				A += SPEED_A;
 				B += SPEED_B;

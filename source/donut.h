@@ -17,4 +17,6 @@
 #define SPEED_A 0.00004
 #define SPEED_B 0.00002
 
+#define FF_MULTI 4
+
 char (*render_frame(float,  float))[SCREEN_WIDTH];

@@ -58,7 +58,7 @@ jobs:
         gh release upload latest nightly.zip
         gh release upload latest artifacts/release/3ds-donut.3dsx
       env:
-        GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        GH_TOKEN: ${{ github.token }}
     - name: Upload Release
       if: github.event_name != 'schedule'
       run: |
@@ -66,4 +66,4 @@ jobs:
         gh release upload "$GITHUB_REF_NAME" "release-${GITHUB_REF_NAME}.zip"
         gh release upload "$GITHUB_REF_NAME" artifacts/release/3ds-donut.3dsx
       env:
-        GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        GH_TOKEN: ${{ github.token }}

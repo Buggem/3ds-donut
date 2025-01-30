@@ -39,6 +39,8 @@ int main(int argc, char** argv)
 			break; // break in order to return to hbmenu
 
 		memcpy(output, render_frame(A, B), sizeof(output));
+
+		consoleClear();
 		for (int j = 0; j < SCREEN_HEIGHT; j++) {
 			for (int i = 0; i < SCREEN_WIDTH; i++) {
 				putchar(output[i][j]);

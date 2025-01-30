@@ -20,7 +20,7 @@
 static int asciiWidth  = (int) GSP_SCREEN_HEIGHT_TOP/8; // why the fuck are these reversed :P
 static int asciiHeight = (int) GSP_SCREEN_WIDTH/8;
 
-// BEGIN AUDIO BULLSHIT
+// -------------------------------------------------------- BEGIN AUDIO BULLSHIT
 
 typedef struct
 {
@@ -48,7 +48,7 @@ void audioCallback(void *const data) {
 	}
 }
 
-// END AUDIO BULLSHIT
+// -------------------------------------------------------- END AUDIO BULLSHIT
 
 int main(int argc, char** argv)
 {
@@ -62,7 +62,25 @@ int main(int argc, char** argv)
 	gfxInitDefault();
 	cfguInit();
 
-// BEGIN AUDIO BULLSHIT
+	PrintConsole topScreen, bottomScreen;
+
+	consoleInit(GFX_TOP, &topScreen);
+	consoleInit(GFX_BOTTOM, &bottomScreen);
+	consoleSelect(&bottomScreen);
+
+	// SPLASH SCREEN
+	// no newlines because text wrapping does it for us
+	printf(" \x1b[44;37m.-------------------------------------.\x1b[40;37m");
+	printf(" \x1b[44;37m|  3DS Donut v1.3                     |\x1b[40;37m");
+	printf(" \x1b[44;37m|  Donut.c by Andy Sloane             |\x1b[40;37m");
+	printf(" \x1b[44;37m|  Ported to libctra by Max Parry     |\x1b[40;37m");
+	printf(" \x1b[44;37m|  Music by Jogeir Liljedahl          |\x1b[40;37m");
+	printf(" \x1b[44;37m|-------------------------------------|\x1b[40;37m");
+	printf(" \x1b[44;37m|  START to return to hbmenu          |\x1b[40;37m");
+	printf(" \x1b[44;37m|  L+R to skim through animation      |\x1b[40;37m");
+	printf(" \x1b[44;37m'-------------------------------------'\x1b[40;37m");
+	
+	// --------------------------------------------------------BEGIN AUDIO BULLSHIT
 
 	ndspInit();
 	romfsInit();
@@ -129,13 +147,12 @@ int main(int argc, char** argv)
 		// and chain the rest of the audio using the callback
 		ndspSetCallback(audioCallback, NULL);
 	}
-// END AUDIO BULLSHIT
+	// -------------------------------------------------------- END AUDIO BULLSHIT
 
 
 
-	// Init console for text output
-	consoleInit(GFX_TOP, NULL);
 
+	consoleSelect(&topScreen);
 	printf("\033[2J");
 	printf("\x1b[H");
 

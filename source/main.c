@@ -131,11 +131,11 @@ int main(int argc, char** argv)
 		// Set up audiobuffers using linearAlloc
 		// This ensures audio data is in contiguous physical ram
 		wavebufs[0].data_pcm16 = (int16_t*)linearAlloc(decoderBufSize);
-		wavebufs[0].looping = false;
+		wavebufs[0].looping = true;
 		wavebufs[0].status = NDSP_WBUF_DONE;
 
 		wavebufs[1].data_pcm16 = (int16_t*)linearAlloc(decoderBufSize);
-		wavebufs[1].looping = false;
+		wavebufs[1].looping = true;
 		wavebufs[1].status = NDSP_WBUF_DONE;
 
 		printf("Playing modplug file!\n");

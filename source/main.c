@@ -57,9 +57,15 @@ int main(int argc, char** argv)
 	static char output[DONUT_WIDTH][DONUT_HEIGHT];
 	int asciiDonutCenterX = (asciiWidth / 2) - (DONUT_HEIGHT / 2);
 
+
+	// Initialize services
+	gfxInitDefault();
+	cfguInit();
+
 // BEGIN AUDIO BULLSHIT
 
 	ndspInit();
+	romfsInit();
 
 	decoder.settings.mFlags = MODPLUG_ENABLE_OVERSAMPLING | MODPLUG_ENABLE_NOISE_REDUCTION;
 	decoder.settings.mChannels = 2;
@@ -125,11 +131,6 @@ int main(int argc, char** argv)
 	}
 // END AUDIO BULLSHIT
 
-	// Initialize services
-	gfxInitDefault();
-	cfguInit();
-
-
 
 
 	// Init console for text output
@@ -189,8 +190,9 @@ int main(int argc, char** argv)
 		linearFree(wavebufs[1].data_pcm16);
 	}
 
-
+	romfsInit();
 	ndspExit();
+
 	gfxExit();
 	return 0;
 }

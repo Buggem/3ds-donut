@@ -171,7 +171,7 @@ BANNERTOOL      ?=	bannertool
 
 MAKEROM		?=	makerom
 
-MAKEROM_ARGS		:=	-elf "$(OUTPUT).elf" -rsf "meta/app.rsf" -banner "$(BUILD)/banner.bnr" -icon "$(BUILD)/icon.icn" -DAPP_TITLE="3DS Donut" -DAPP_PRODUCT_CODE="CTR-P-DNT" -DAPP_UNIQUE_ID="0xE98BA" -major 1.4
+MAKEROM_ARGS		:=	-elf "$(OUTPUT).elf" -rsf "meta/app.rsf" -banner "$(BUILD)/banner.bnr" -icon "$(BUILD)/icon.icn" -DAPP_TITLE="3DS Donut" -DAPP_PRODUCT_CODE="CTR-P-DNT" -DAPP_UNIQUE_ID="0xE98BA"
 
 
 
@@ -182,7 +182,7 @@ endif
 #---------------------------------------------------------------------------------
 all: $(BUILD) $(GFXBUILD) $(DEPSDIR) $(ROMFS_T3XFILES) $(T3XHFILES)
 	@$(MAKE) --no-print-directory -C $(BUILD) -f $(CURDIR)/Makefile
-	$(BANNERTOOL) makebanner -i "meta/banner_trim.png" -o "$(BUILD)/banner.bnr"
+	$(BANNERTOOL) makebanner -i "meta/banner_trim.png" -a "meta/banner_trim.wav" -o "$(BUILD)/banner.bnr"
 	$(BANNERTOOL) makesmdh -s "$(APP_TITLE)" -l "$(APP_TITLE)" -p "$(APP_AUTHOR)" -i "$(BUILD)/$(APP_ICON)" -f "nosavebackups,visible" -o "$(BUILD)/icon.icn"
 	$(MAKEROM) -f cia -o "$(OUTPUT).cia" -target t -exefslogo $(MAKEROM_ARGS)
 $(BUILD):

@@ -4,6 +4,11 @@ sudo apt-get update
 
 cd "$1"
 
+if [ -d "release" ]; then
+  # Remove the file
+  rm -rf "release"
+fi
+
 make
 
 mkdir release

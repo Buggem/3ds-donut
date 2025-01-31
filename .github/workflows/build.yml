@@ -24,6 +24,7 @@ jobs:
       - name: Build
         id: build
         run: |
+          utils/bin/bannertool makebanner -i "meta/banner_trim.png" -a "meta/banner_trim.wav" -o "build/banner.bnr"
           docker build -t devkitarm_utils .
           chmod +x ./.github/ci.sh
           docker run -v "$PWD":"$PWD" --rm -t devkitarm_utils bash -c "$PWD/.github/ci.sh \"$PWD\""

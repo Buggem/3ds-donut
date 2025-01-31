@@ -71,7 +71,7 @@ int main(int argc, char** argv)
 	// SPLASH SCREEN
 	// no newlines because text wrapping does it for us
 	printf(" \x1b[44;37m.-------------------------------------.\x1b[40;37m");
-	printf(" \x1b[44;37m|  3DS Donut v1.3                     |\x1b[40;37m");
+	printf(" \x1b[44;37m|  3DS Donut v1.4                     |\x1b[40;37m");
 	printf(" \x1b[44;37m|  Donut.c by Andy Sloane             |\x1b[40;37m");
 	printf(" \x1b[44;37m|  Ported to libctra by Max Parry     |\x1b[40;37m");
 	printf(" \x1b[44;37m|  Music by Jogeir Liljedahl          |\x1b[40;37m");

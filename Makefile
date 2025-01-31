@@ -171,7 +171,7 @@ BANNERTOOL      ?=	bannertool
 
 MAKEROM		?=	makerom
 
-MAKEROM_ARGS		:=	-elf "$(OUTPUT).elf" -rsf "meta/app.rsf" -banner "$(BUILD)/banner.bnr" -icon "$(BUILD)/icon.icn" -DAPP_TITLE="3DS Donut" -DAPP_PRODUCT_CODE="CTR-P-DNT" -DAPP_UNIQUE_ID="0xE98BA" -major 1.3
+MAKEROM_ARGS		:=	-elf "$(OUTPUT).elf" -rsf "meta/app.rsf" -banner "$(BUILD)/banner.bnr" -icon "$(BUILD)/icon.icn" -DAPP_TITLE="3DS Donut" -DAPP_PRODUCT_CODE="CTR-P-DNT" -DAPP_UNIQUE_ID="0xE98BA" -major 1.4
 
 
 

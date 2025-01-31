@@ -41,11 +41,12 @@ jobs:
     steps:
     - name: Checkout repo
       uses: actions/checkout@v4
-    - name: Download Artifacts
-      run: | 
+    - name: Download Artifacts & Prepare Script
+      run: |
         gh run download "$GITHUB_RUN_ID" \
           --dir artifacts/ \
           --repo "$GITHUB_REPOSITORY"
+        chmod +x ./.github/upload.sh
     - name: Upload Nightly
       if: github.event_name == 'schedule'
       run: |

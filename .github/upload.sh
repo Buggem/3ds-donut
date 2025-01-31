@@ -1,7 +1,7 @@
 #!/bin/bash
 
-RELEASE_NAME = "$1"
-RELEASE_ID = "$2"
+RELEASE_NAME="$1"
+RELEASE_ID="$2"
 
 
 # Zip up a package

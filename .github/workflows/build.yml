@@ -10,7 +10,6 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
-    container: devkitpro/devkitarm
     name: Build with DevkitARM
     steps:
       - name: Checkout repo
@@ -25,13 +24,9 @@ jobs:
       - name: Build
         id: build
         run: |
-          make
-      - name: Zip it up
-        run: |
-          mkdir release
-          mv *.3dsx release
-          mv *.smdh release
-          mv *.elf release
+          docker build -t devkitarm_utils .
+          chmod +x ./.github/ci.sh
+          docker run -v "$PWD":"$PWD" --rm -ti devkitarm_utils bash -c "$PWD/.github/ci.sh \"$PWD\""
       - name: Send the Release
         uses: actions/upload-artifact@v4
         with:
@@ -41,6 +36,8 @@ jobs:
     name: "Upload releases"
     runs-on: ubuntu-latest
     needs: [build]
+    env:
+      GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
     steps:
     - name: Checkout repo
       uses: actions/checkout@v4
@@ -51,19 +48,9 @@ jobs:
           --repo "$GITHUB_REPOSITORY"
     - name: Upload Nightly
       if: github.event_name == 'schedule'
-      env:
-        GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       run: |
-        zip -r "nightly.zip" artifacts/release/
-        gh release delete-asset latest nightly.zip -y
-        gh release delete-asset latest 3ds-donut.3dsx -y
-        gh release upload latest nightly.zip
-        gh release upload latest artifacts/release/3ds-donut.3dsx
+        ./.github/upload.sh nightly latest
     - name: Upload Release
       if: github.event_name != 'schedule'
-      env:
-        GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       run: |
-        zip -r "release-${GITHUB_REF_NAME}.zip" artifacts/release/
-        gh release upload "$GITHUB_REF_NAME" "release-${GITHUB_REF_NAME}.zip"
-        gh release upload "$GITHUB_REF_NAME" artifacts/release/3ds-donut.3dsx
+        ./.github/upload.sh "$GITHUB_REF_NAME-release" "$GITHUB_REF_NAME"

@@ -184,8 +184,8 @@ BANNERTOOL	?=	bannertool
 #---------------------------------------------------------------------------------
 all: $(BUILD) $(GFXBUILD) $(DEPSDIR) $(ROMFS_T3XFILES) $(T3XHFILES)
 	@$(MAKE) --no-print-directory -C $(BUILD) -f $(CURDIR)/Makefile
-	@$(BANNERTOOL) makebanner -i "meta/banner_trim.png" -a "meta/banner_trim.wav" -o "$(BUILD)/banner.bnr"
-	@$(BANNERTOOL) makesmdh -s "$(APP_TITLE)" -l "$(APP_TITLE)" -p "$(APP_AUTHOR)" -i "$(BUILD)/$(APP_ICON)" -f "nosavebackups,visible" -o "$(BUILD)/icon.icn"
+	$(BANNERTOOL) makebanner -i "meta/banner_trim.png" -a "meta/banner_trim.wav" -o "$(BUILD)/banner.bnr"
+	$(BANNERTOOL) makesmdh -s "$(APP_TITLE)" -l "$(APP_TITLE)" -p "$(APP_AUTHOR)" -i "$(BUILD)/$(APP_ICON)" -f "nosavebackups,visible" -o "$(BUILD)/icon.icn"
 	$(MAKEROM) -f cia -o "$(OUTPUT).cia" -target t -exefslogo $(MAKEROM_ARGS)
 $(BUILD):
 	@mkdir -p $@

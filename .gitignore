@@ -1,5 +1,6 @@
 *.smdh
 *.3dsx
 *.elf
+*.cia
 build/*
 source/donut

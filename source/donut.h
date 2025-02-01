@@ -8,8 +8,8 @@
 #if __3DS__
 
 #define DELAY 0
-#define SPEED_A 0.00004
-#define SPEED_B 0.00002
+#define SPEED_A 0.00008
+#define SPEED_B 0.00004
 
 
 #else

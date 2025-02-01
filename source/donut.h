@@ -3,6 +3,7 @@
 #define DONUT_WIDTH 30
 #define DONUT_HEIGHT 30
 
+#define SPEED_INTER 0.00001
 
 #if __3DS__
 

@@ -14,11 +14,17 @@
 #include <libmodplug/modplug.h>
 
 
+PrintConsole topScreen, bottomScreen;
+
 // constants and renderer
 #include "donut.h"
 
 static int asciiWidth  = (int) GSP_SCREEN_HEIGHT_TOP/8; // why the fuck are these reversed :P
 static int asciiHeight = (int) GSP_SCREEN_WIDTH/8;
+
+static float speedA = SPEED_A;
+static float speedB = SPEED_B;
+
 
 // -------------------------------------------------------- BEGIN AUDIO BULLSHIT
 
@@ -48,6 +54,23 @@ void audioCallback(void *const data) {
 	}
 }
 
+void splashScreen(void) {
+	// SPLASH SCREEN
+	// no newlines because text wrapping does it for us
+	printf(" \x1b[44;37m.-------------------------------------.\x1b[40;37m");
+	printf(" \x1b[44;37m|  3DS Donut v1.5                     |\x1b[40;37m");
+	printf(" \x1b[44;37m|  Donut.c by Andy Sloane             |\x1b[40;37m");
+	printf(" \x1b[44;37m|  Ported to libctra by Max Parry     |\x1b[40;37m");
+	printf(" \x1b[44;37m|  Music by Jogeir Liljedahl          |\x1b[40;37m");
+	printf(" \x1b[44;37m|-------------------------------------|\x1b[40;37m");
+	printf(" \x1b[44;37m|  START to return to hbmenu          |\x1b[40;37m");
+	printf(" \x1b[44;37m|  L+R to skim through animation      |\x1b[40;37m");
+	printf(" \x1b[44;37m|  D-Pad to modify the animation      |\x1b[40;37m");
+	printf(" \x1b[44;37m|  A to reset the animation           |\x1b[40;37m");
+	printf(" \x1b[44;37m'-------------------------------------'\x1b[40;37m");
+	// NOTE2SELF: make sure to revert it to the top one
+}
+
 // -------------------------------------------------------- END AUDIO BULLSHIT
 
 int main(int argc, char** argv)
@@ -62,24 +85,13 @@ int main(int argc, char** argv)
 	gfxInitDefault();
 	cfguInit();
 
-	PrintConsole topScreen, bottomScreen;
 
 	consoleInit(GFX_TOP, &topScreen);
 	consoleInit(GFX_BOTTOM, &bottomScreen);
 	consoleSelect(&bottomScreen);
 
-	// SPLASH SCREEN
-	// no newlines because text wrapping does it for us
-	printf(" \x1b[44;37m.-------------------------------------.\x1b[40;37m");
-	printf(" \x1b[44;37m|  3DS Donut v1.4                     |\x1b[40;37m");
-	printf(" \x1b[44;37m|  Donut.c by Andy Sloane             |\x1b[40;37m");
-	printf(" \x1b[44;37m|  Ported to libctra by Max Parry     |\x1b[40;37m");
-	printf(" \x1b[44;37m|  Music by Jogeir Liljedahl          |\x1b[40;37m");
-	printf(" \x1b[44;37m|-------------------------------------|\x1b[40;37m");
-	printf(" \x1b[44;37m|  START to return to hbmenu          |\x1b[40;37m");
-	printf(" \x1b[44;37m|  L+R to skim through animation      |\x1b[40;37m");
-	printf(" \x1b[44;37m'-------------------------------------'\x1b[40;37m");
-	
+	splashScreen();
+
 	// --------------------------------------------------------BEGIN AUDIO BULLSHIT
 
 	ndspInit();
@@ -167,6 +179,28 @@ int main(int argc, char** argv)
 		if (kDown & KEY_START)
 			break; // break in order to return to hbmenu
 
+		if (kHeld & KEY_DRIGHT) speedA += SPEED_INTER;
+		else if (kHeld & KEY_DLEFT) speedA -= SPEED_INTER;
+
+		if (kHeld & KEY_DUP) speedB += SPEED_INTER;
+		else if (kHeld & KEY_DDOWN) speedB -= SPEED_INTER;
+
+		// reset the animation to it's default state (for nerds)
+		if (kDown & KEY_A) {
+			// replay the splash screen
+			consoleSelect(&bottomScreen);
+			consoleClear();
+			splashScreen();
+			consoleSelect(&topScreen);
+			// reinitialise the anim
+			printf("\033[2J");
+			printf("\x1b[H");
+			A = 0;
+			B = 0;
+			speedA = SPEED_A;
+			speedB = SPEED_B;
+		}
+
 		memcpy(output, render_frame(A, B), sizeof(output));
 
 		consoleClear();
@@ -175,15 +209,15 @@ int main(int argc, char** argv)
 			for (int i = 0; i < DONUT_WIDTH; i++) {
 				putchar(output[i][j]);
 				if (kHeld & KEY_R) {
-					A += SPEED_A * FF_MULTI;
-					B += SPEED_B * FF_MULTI;
+					A += speedA * FF_MULTI;
+					B += speedB * FF_MULTI;
 				}
 				if (kHeld & KEY_L) {
-					A -= SPEED_A * (1 + FF_MULTI);
-					B -= SPEED_B * (1 + FF_MULTI);
+					A -= speedA * (1 + FF_MULTI);
+					B -= speedB * (1 + FF_MULTI);
 				}
-				A += SPEED_A;
-				B += SPEED_B;
+				A += speedA;
+				B += speedB;
 			}
 			putchar('\n');
 		}
@@ -194,8 +228,6 @@ int main(int argc, char** argv)
 		gfxFlushBuffers();
 		gfxSwapBuffers();
 		gspWaitForVBlank();
-
-		usleep(DELAY);
 	}
 
 	// Exit services

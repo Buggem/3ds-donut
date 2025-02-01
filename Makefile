@@ -41,7 +41,7 @@ GFXBUILD	:=	$(BUILD)
 ROMFS		:=	romfs
 #GFXBUILD	:=	$(ROMFS)/gfx
 
-APP_TITLE	:=	donut.c
+APP_TITLE	:=	3DS Donut
 APP_DESCRIPTION	:=	A donut that spins. It's magic.
 APP_AUTHOR	:=	Andy Sloane
 APP_ICON	:=	../meta/icon.png
@@ -171,7 +171,7 @@ BANNERTOOL      ?=	bannertool
 
 MAKEROM		?=	makerom
 
-MAKEROM_ARGS		:=	-elf "$(OUTPUT).elf" -rsf "meta/app.rsf" -banner "$(BUILD)/banner.bnr" -icon "$(BUILD)/icon.icn" -DAPP_TITLE="3DS Donut" -DAPP_PRODUCT_CODE="CTR-P-DNT" -DAPP_UNIQUE_ID="0xE98BA"
+MAKEROM_ARGS		:=	-elf "$(OUTPUT).elf" -rsf "meta/app.rsf" -banner "$(BUILD)/banner.bnr" -icon "$(BUILD)/icon.icn" -DAPP_TITLE="$(APP_TITLE)" -DAPP_PRODUCT_CODE="CTR-P-DNT" -DAPP_UNIQUE_ID="0xE98BA"
 
 
 
